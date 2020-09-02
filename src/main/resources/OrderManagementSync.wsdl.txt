@@ -1,0 +1,1368 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://schemas.kaspersky.com/korm/3.0/orders" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="OrderManagementSync" targetNamespace="http://schemas.kaspersky.com/korm/3.0/orders">
+<wsp:Policy wsu:Id="CustomBinding_IOrderManagementSync_policy">
+<wsp:ExactlyOne>
+<wsp:All>
+<http:NegotiateAuthentication xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"/>
+<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+<wsp:Policy>
+<sp:TransportToken>
+<wsp:Policy>
+<sp:HttpsToken RequireClientCertificate="false"/>
+</wsp:Policy>
+</sp:TransportToken>
+<sp:AlgorithmSuite>
+<wsp:Policy>
+<sp:Basic256/>
+</wsp:Policy>
+</sp:AlgorithmSuite>
+<sp:Layout>
+<wsp:Policy>
+<sp:Strict/>
+</wsp:Policy>
+</sp:Layout>
+</wsp:Policy>
+</sp:TransportBinding>
+<wsaw:UsingAddressing/>
+</wsp:All>
+</wsp:ExactlyOne>
+</wsp:Policy>
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.kaspersky.com/korm/3.0/orders">
+<xs:element name="PlaceInitialOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q1="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q1:InitialOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="InitialOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q2="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q2:InitialAdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q3="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedLicenseIdentity" nillable="true" type="q3:LicenseIdentity"/>
+<xs:element xmlns:q4="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q4:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q5="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q5:Customer"/>
+<xs:element xmlns:q6="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Delivery" nillable="true" type="q6:Delivery"/>
+<xs:element xmlns:q7="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q7:Distributor"/>
+<xs:element xmlns:q8="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q8:ExternalOrderAssociation"/>
+<xs:element xmlns:q9="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q9:FinancialData"/>
+<xs:element xmlns:q10="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q10:InitialLicenseInfo"/>
+<xs:element minOccurs="0" name="PromotionCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q11="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q11:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TestOrder" type="xs:boolean"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q12="http://schemas.kaspersky.com/korm/3.0/orders" name="InitialOrderRequest" nillable="true" type="q12:InitialOrderRequest"/>
+<xs:complexType name="InitialAdditionalData">
+<xs:sequence>
+<xs:element xmlns:q13="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PreloadSellInfo" nillable="true" type="q13:PreloadSell"/>
+<xs:element xmlns:q14="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="SalesSupport" nillable="true" type="q14:SalesSupport"/>
+<xs:element xmlns:q15="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TrackingParameters" nillable="true" type="q15:ArrayOfTrackingParameter"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q16="http://schemas.kaspersky.com/korm/3.0/orders" name="InitialAdditionalData" nillable="true" type="q16:InitialAdditionalData"/>
+<xs:complexType name="PreloadSell">
+<xs:sequence>
+<xs:element minOccurs="0" name="ProjectCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ThirdPartyPartnerId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q17="http://schemas.kaspersky.com/korm/3.0/orders" name="PreloadSell" nillable="true" type="q17:PreloadSell"/>
+<xs:complexType name="SalesSupport">
+<xs:sequence>
+<xs:element minOccurs="0" name="OpportunityId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q18="http://schemas.kaspersky.com/korm/3.0/orders" name="SalesSupport" nillable="true" type="q18:SalesSupport"/>
+<xs:complexType name="ArrayOfTrackingParameter">
+<xs:sequence>
+<xs:element xmlns:q19="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" maxOccurs="unbounded" name="TrackingParameter" nillable="true" type="q19:TrackingParameter"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q20="http://schemas.kaspersky.com/korm/3.0/orders" name="ArrayOfTrackingParameter" nillable="true" type="q20:ArrayOfTrackingParameter"/>
+<xs:complexType name="TrackingParameter">
+<xs:sequence>
+<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q21="http://schemas.kaspersky.com/korm/3.0/orders" name="TrackingParameter" nillable="true" type="q21:TrackingParameter"/>
+<xs:complexType name="LicenseIdentity">
+<xs:sequence>
+<xs:element minOccurs="0" name="ActivationCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="KeySerialNumber" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="LicenseId" nillable="true" type="ser:guid"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q22="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseIdentity" nillable="true" type="q22:LicenseIdentity"/>
+<xs:complexType name="OrderIdentity">
+<xs:sequence>
+<xs:element name="KormOrderNumber" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q23="http://schemas.kaspersky.com/korm/3.0/orders" name="OrderIdentity" nillable="true" type="q23:OrderIdentity"/>
+<xs:complexType name="Customer">
+<xs:sequence>
+<xs:element xmlns:q24="http://schemas.kaspersky.com/korm/3.0/orders" name="Address" nillable="true" type="q24:Address"/>
+<xs:element xmlns:q25="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Contacts" nillable="true" type="q25:Contacts"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q26="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q26:Customer"/>
+<xs:complexType name="Address">
+<xs:sequence>
+<xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="City" nillable="true" type="xs:string"/>
+<xs:element name="Country" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="State" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Zip" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q27="http://schemas.kaspersky.com/korm/3.0/orders" name="Address" nillable="true" type="q27:Address"/>
+<xs:complexType name="Contacts">
+<xs:sequence>
+<xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="CustomerCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="WebSite" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q28="http://schemas.kaspersky.com/korm/3.0/orders" name="Contacts" nillable="true" type="q28:Contacts"/>
+<xs:complexType name="Delivery">
+<xs:sequence>
+<xs:element xmlns:q29="http://schemas.kaspersky.com/korm/3.0/orders" name="DeliveryMethod" type="q29:DeliveryMethod"/>
+<xs:element xmlns:q30="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ElectronicDelivery" nillable="true" type="q30:ElectronicDelivery"/>
+<xs:element xmlns:q31="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ShippingData" nillable="true" type="q31:ShippingData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q32="http://schemas.kaspersky.com/korm/3.0/orders" name="Delivery" nillable="true" type="q32:Delivery"/>
+<xs:simpleType name="DeliveryMethod">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Electronic"/>
+<xs:enumeration value="Physical"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element xmlns:q33="http://schemas.kaspersky.com/korm/3.0/orders" name="DeliveryMethod" nillable="true" type="q33:DeliveryMethod"/>
+<xs:complexType name="ElectronicDelivery">
+<xs:sequence>
+<xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+<xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EmailsBcc" nillable="true" type="q34:ArrayOfstring"/>
+<xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EmailsCC" nillable="true" type="q35:ArrayOfstring"/>
+<xs:element xmlns:q36="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EmailsTo" nillable="true" type="q36:ArrayOfstring"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q37="http://schemas.kaspersky.com/korm/3.0/orders" name="ElectronicDelivery" nillable="true" type="q37:ElectronicDelivery"/>
+<xs:complexType name="ShippingData">
+<xs:sequence>
+<xs:element minOccurs="0" name="DispatchCountry" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ShippingCountry" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q38="http://schemas.kaspersky.com/korm/3.0/orders" name="ShippingData" nillable="true" type="q38:ShippingData"/>
+<xs:complexType name="Distributor">
+<xs:sequence>
+<xs:element name="Partner" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Payer" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Reseller" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q39="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q39:Distributor"/>
+<xs:complexType name="ExternalOrderAssociation">
+<xs:sequence>
+<xs:element minOccurs="0" name="ExternalId1" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ExternalId2" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="ExternalId3" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q40="http://schemas.kaspersky.com/korm/3.0/orders" name="ExternalOrderAssociation" nillable="true" type="q40:ExternalOrderAssociation"/>
+<xs:complexType name="FinancialData">
+<xs:sequence>
+<xs:element xmlns:q41="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="EndUserAmount" nillable="true" type="q41:Money"/>
+<xs:element minOccurs="0" name="EndUserDiscountPercent" nillable="true" type="xs:decimal"/>
+<xs:element xmlns:q42="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PartnerPrice" nillable="true" type="q42:Price"/>
+<xs:element minOccurs="0" name="ResellerDiscountPercent" nillable="true" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q43="http://schemas.kaspersky.com/korm/3.0/orders" name="FinancialData" nillable="true" type="q43:FinancialData"/>
+<xs:complexType name="Money">
+<xs:sequence>
+<xs:element name="Amount" type="xs:decimal"/>
+<xs:element name="Currency" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q44="http://schemas.kaspersky.com/korm/3.0/orders" name="Money" nillable="true" type="q44:Money"/>
+<xs:complexType name="Price">
+<xs:sequence>
+<xs:element name="Currency" nillable="true" type="xs:string"/>
+<xs:element name="Value" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q45="http://schemas.kaspersky.com/korm/3.0/orders" name="Price" nillable="true" type="q45:Price"/>
+<xs:complexType name="InitialLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element xmlns:q46="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="LicenseRestrictions" nillable="true" type="q46:InitialLicenseRestrictions"/>
+<xs:element xmlns:q47="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseType" type="q47:LicenseType"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element xmlns:q48="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="SharingMode" type="q48:SharingMode"/>
+<xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q49="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q49:InitialTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q50="http://schemas.kaspersky.com/korm/3.0/orders" name="InitialLicenseInfo" nillable="true" type="q50:InitialLicenseInfo"/>
+<xs:complexType name="InitialLicenseRestrictions">
+<xs:sequence>
+<xs:element minOccurs="0" name="FixedExpirationTime" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q51="http://schemas.kaspersky.com/korm/3.0/orders" name="InitialLicenseRestrictions" nillable="true" type="q51:InitialLicenseRestrictions"/>
+<xs:simpleType name="LicenseType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Commercial"/>
+<xs:enumeration value="Trial"/>
+<xs:enumeration value="Beta"/>
+<xs:enumeration value="Nfr"/>
+<xs:enumeration value="Free"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element xmlns:q52="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseType" nillable="true" type="q52:LicenseType"/>
+<xs:simpleType name="SharingMode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Dedicated"/>
+<xs:enumeration value="Shared"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element xmlns:q53="http://schemas.kaspersky.com/korm/3.0/orders" name="SharingMode" nillable="true" type="q53:SharingMode"/>
+<xs:complexType name="InitialTerm">
+<xs:sequence>
+<xs:element xmlns:q54="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExpirationStartingMoment" type="q54:ExpirationStartingMoment"/>
+<xs:element xmlns:q55="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q55:InitialFreeTerm"/>
+<xs:element minOccurs="0" name="PaidTermDays" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q56="http://schemas.kaspersky.com/korm/3.0/orders" name="InitialTerm" nillable="true" type="q56:InitialTerm"/>
+<xs:simpleType name="ExpirationStartingMoment">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Undefined"/>
+<xs:enumeration value="FromUserActivation"/>
+<xs:enumeration value="FromPurchase"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element xmlns:q57="http://schemas.kaspersky.com/korm/3.0/orders" name="ExpirationStartingMoment" nillable="true" type="q57:ExpirationStartingMoment"/>
+<xs:complexType name="InitialFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DaysAfter" type="xs:int"/>
+<xs:element minOccurs="0" name="DaysBefore" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q58="http://schemas.kaspersky.com/korm/3.0/orders" name="InitialFreeTerm" nillable="true" type="q58:InitialFreeTerm"/>
+<xs:complexType name="TermsAndConditions">
+<xs:sequence>
+<xs:element xmlns:q59="http://schemas.kaspersky.com/korm/3.0/orders" name="CustomerAgreements" nillable="true" type="q59:ArrayOfCustomerAgreement"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q60="http://schemas.kaspersky.com/korm/3.0/orders" name="TermsAndConditions" nillable="true" type="q60:TermsAndConditions"/>
+<xs:complexType name="ArrayOfCustomerAgreement">
+<xs:sequence>
+<xs:element xmlns:q61="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" maxOccurs="unbounded" name="CustomerAgreement" nillable="true" type="q61:CustomerAgreement"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q62="http://schemas.kaspersky.com/korm/3.0/orders" name="ArrayOfCustomerAgreement" nillable="true" type="q62:ArrayOfCustomerAgreement"/>
+<xs:complexType name="CustomerAgreement">
+<xs:sequence>
+<xs:element name="AgreementAccepted" type="xs:boolean"/>
+<xs:element minOccurs="0" name="AgreementText" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="AgreementTextHash" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q63="http://schemas.kaspersky.com/korm/3.0/orders" name="CustomerAgreement" nillable="true" type="q63:CustomerAgreement"/>
+<xs:element name="PlaceInitialOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q64="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceInitialOrderResult" nillable="true" type="q64:PlaceOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="PlaceOrderSyncOperationResult">
+<xs:sequence>
+<xs:element xmlns:q65="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Data" nillable="true" type="q65:SyncOrderResponse"/>
+<xs:element xmlns:q66="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ErrorCode" nillable="true" type="q66:ErrorCode"/>
+<xs:element minOccurs="0" name="ErrorId" nillable="true" type="ser:guid"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Succeeded" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q67="http://schemas.kaspersky.com/korm/3.0/orders" name="PlaceOrderSyncOperationResult" nillable="true" type="q67:PlaceOrderSyncOperationResult"/>
+<xs:complexType name="SyncOrderResponse">
+<xs:sequence>
+<xs:element xmlns:q68="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialResults" nillable="true" type="q68:FinancialResults"/>
+<xs:element minOccurs="0" name="KormOrderNumber" nillable="true" type="xs:string"/>
+<xs:element xmlns:q69="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="OrderResultDetails" nillable="true" type="q69:SyncOrderResultDetails"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q70="http://schemas.kaspersky.com/korm/3.0/orders" name="SyncOrderResponse" nillable="true" type="q70:SyncOrderResponse"/>
+<xs:complexType name="FinancialResults">
+<xs:sequence>
+<xs:element name="CurrencyCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="PartnerAmount" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q71="http://schemas.kaspersky.com/korm/3.0/orders" name="FinancialResults" nillable="true" type="q71:FinancialResults"/>
+<xs:complexType name="SyncOrderResultDetails">
+<xs:sequence>
+<xs:element xmlns:q72="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ActivationCodes" nillable="true" type="q72:ArrayOfstring"/>
+<xs:element minOccurs="0" name="LicenseTerm" type="xs:int"/>
+<xs:element xmlns:q73="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="LicenseTermDetails" nillable="true" type="q73:TermPeriod"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q74="http://schemas.kaspersky.com/korm/3.0/orders" name="SyncOrderResultDetails" nillable="true" type="q74:SyncOrderResultDetails"/>
+<xs:complexType name="TermPeriod">
+<xs:sequence>
+<xs:element xmlns:q75="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="NextPeriod" nillable="true" type="q75:TermPeriod"/>
+<xs:element minOccurs="0" name="PeriodDescription" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Term" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q76="http://schemas.kaspersky.com/korm/3.0/orders" name="TermPeriod" nillable="true" type="q76:TermPeriod"/>
+<xs:simpleType name="ErrorCode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SystemError"/>
+<xs:enumeration value="InvalidRequest"/>
+<xs:enumeration value="ResellerNotActive"/>
+<xs:enumeration value="MemberPermissionDeniedInsufficientRightsToPlaceOrder"/>
+<xs:enumeration value="MemberPermissionDeniedOrderNotAccessible"/>
+<xs:enumeration value="MemberPermissionDeniedAccountIsNotConfiguredForSyncAPI"/>
+<xs:enumeration value="MemberPermissionDeniedAccountNotFound"/>
+<xs:enumeration value="MemberPermissionDeniedSharingModeNotAllowed"/>
+<xs:enumeration value="MemberPermissionDeniedPartnerIsBlocked"/>
+<xs:enumeration value="MemberPermissionDeniedPartnerContractIsBlocked"/>
+<xs:enumeration value="MemberPermissionDeniedIntercompanyRequestNotAllowed"/>
+<xs:enumeration value="AssociatedOrderWithSpecifiedLicenseTypeNotAllowed"/>
+<xs:enumeration value="AssociatedOrderDoesNotHaveExpirationDate"/>
+<xs:enumeration value="AssociatedOrderCanNotBeCanceled"/>
+<xs:enumeration value="AssociatedOrderNotFound"/>
+<xs:enumeration value="SelectedOrderNotFound"/>
+<xs:enumeration value="AssociatedOrderWithExtendingTypeNotAllowed"/>
+<xs:enumeration value="AssociatedOrderOrLicenseIdentityIsRequiredForExtendingOrder"/>
+<xs:enumeration value="AssociatedOrderMustBeInCompletedState"/>
+<xs:enumeration value="AssociatedOrderCanNotBeExpired"/>
+<xs:enumeration value="AssociatedOrderCanNotBeSubscription"/>
+<xs:enumeration value="SkuWithAddOnLicenseTypeNotAllowed"/>
+<xs:enumeration value="AllianceSkuNotAllowed"/>
+<xs:enumeration value="SkuHasWrongFormat"/>
+<xs:enumeration value="SkuIsOutOfSale"/>
+<xs:enumeration value="SkuLicenseTypeNotAllowed"/>
+<xs:enumeration value="SkuNotFoundByMask"/>
+<xs:enumeration value="PromotionCodeNotFound"/>
+<xs:enumeration value="PromotionCodeNotApplicable"/>
+<xs:enumeration value="FinancialDataEndUserAmountOrDiscountAreRequired"/>
+<xs:enumeration value="FinancialDataCurrencyCodeIsInvalid"/>
+<xs:enumeration value="FinancialDataResellerDiscountPercentIsOutOfRange"/>
+<xs:enumeration value="CurrencyNotAllowed"/>
+<xs:enumeration value="FixedExpirationTimeIsNotAllowed"/>
+<xs:enumeration value="FixedExpirationTimeTooLate"/>
+<xs:enumeration value="OrderNotAllowedForOperation"/>
+<xs:enumeration value="OrderNotFoundByActivationCode"/>
+<xs:enumeration value="OrderNotFoundByKeySerialNumber"/>
+<xs:enumeration value="KeySerialNumberHasInvalidFormat"/>
+<xs:enumeration value="OrderNotFoundByLicenseId"/>
+<xs:enumeration value="OrderNotFoundByExternalReferences"/>
+<xs:enumeration value="ExpirationStartingMomentIsMandatory"/>
+<xs:enumeration value="LicenseIdIsMandatory"/>
+<xs:enumeration value="PartnerCodeIsMandatory"/>
+<xs:enumeration value="SkuIsMandatory"/>
+<xs:enumeration value="KormOrderNumberIsMandatory"/>
+<xs:enumeration value="PhysicalDeliveryForTangibalPositionIsMandatory"/>
+<xs:enumeration value="KormOrderNumberOrExternalOrderAssociationIsMandatory"/>
+<xs:enumeration value="AssociatedOrderForB2BRenewalIsMandatory"/>
+<xs:enumeration value="ResellerNotFound"/>
+<xs:enumeration value="PartnerNotFound"/>
+<xs:enumeration value="SkuNotFound"/>
+<xs:enumeration value="LicenseFreeTermNotAllowedForLicenseType"/>
+<xs:enumeration value="PaidTermDaysNotEqualToSkuTerm"/>
+<xs:enumeration value="PaidTermDaysGreaterThanSkuTerm"/>
+<xs:enumeration value="PartnerIsBlocked"/>
+<xs:enumeration value="RenewalPolicyViolation"/>
+<xs:enumeration value="OrderQuantityMustBeGreaterThanZero"/>
+<xs:enumeration value="LicenseFreeTermIsInvalid"/>
+<xs:enumeration value="LicenseRenewalTooLate"/>
+<xs:enumeration value="LicenseRenewalTooEarly"/>
+<xs:enumeration value="RenewSubscriptionLicenseWithDifferentQuantityNotAllowed"/>
+<xs:enumeration value="InitiallyBlockedLicenseNotAllowed"/>
+<xs:enumeration value="LicenseIdentityIsMandatory"/>
+<xs:enumeration value="SelectedOrderDoesNotHaveActivationCodes"/>
+<xs:enumeration value="SkuTypeMismatch"/>
+<xs:enumeration value="PayerNotFound"/>
+<xs:enumeration value="SubscriptionSkuIsNotLicense"/>
+<xs:enumeration value="SubscriptionSkuBandDoesntMatchQuantity"/>
+<xs:enumeration value="AssociatedOrderMustBeTest"/>
+<xs:enumeration value="FreeAfterTermNotAllowedForCutPaidTerm"/>
+<xs:enumeration value="ResellerCodeNotAllowedForPartner"/>
+<xs:enumeration value="SaleDiscountIsOutOfRange"/>
+<xs:enumeration value="CanceledOrderNotAllowedForOperation"/>
+<xs:enumeration value="CompletedOrderNotAllowedForOperation"/>
+<xs:enumeration value="OrderWithNotCanceledAllianceAddonCanNotBeCanceled"/>
+<xs:enumeration value="AssociatedAllianceOrderNotAllowed"/>
+<xs:enumeration value="AssociatedOrderAlreadyRenewed"/>
+<xs:enumeration value="ResellerIsMandatory"/>
+<xs:enumeration value="AffiliateCodeNotFound"/>
+<xs:enumeration value="OrderFinancePartnerDiscountPercentIsOutOfRange"/>
+<xs:enumeration value="OrderFinanceResellerDiscountPercentIsOutOfRange"/>
+<xs:enumeration value="LicenseOrAssociatedOrderIsRequiredForSubscriptionRenewal"/>
+<xs:enumeration value="LicenseOrAssociatedOrderIsRequiredForSaasRenewal"/>
+<xs:enumeration value="LicenseIdentityIsAmbiguous"/>
+<xs:enumeration value="RenewalToSaasIsNotAllowedForProduct"/>
+<xs:enumeration value="TooManyActivationCodesRequested"/>
+<xs:enumeration value="FallbackProductNotAdjusted"/>
+<xs:enumeration value="FinancialDataShouldBeEmptyForSpecifiedLicenseType"/>
+<xs:enumeration value="TrialOrderNotAllowed"/>
+<xs:enumeration value="PromotionCodeNotAllowedWithEndUserDiscount"/>
+<xs:enumeration value="OrderWithNotCanceledRenewalCanNotBeCanceled"/>
+<xs:enumeration value="LicenseManagedByOtherPartner"/>
+<xs:enumeration value="RenewalToSaasIsNotAllowedForPartner"/>
+<xs:enumeration value="ExpirationStartingMomentFromUserActivationNotAllowed"/>
+<xs:enumeration value="AssociatedOrderProductMustBeB2B"/>
+<xs:enumeration value="B2BSkuIsRequired"/>
+<xs:enumeration value="ExternalOrderAssociationIsMandatory"/>
+<xs:enumeration value="SkuIsNotCompatibleWithExpirationStartingPoint"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element xmlns:q77="http://schemas.kaspersky.com/korm/3.0/orders" name="ErrorCode" nillable="true" type="q77:ErrorCode"/>
+<xs:element name="PlaceRenewalOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q78="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q78:RenewalOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="RenewalOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q79="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q79:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q80="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q80:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q81="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q81:Customer"/>
+<xs:element xmlns:q82="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Delivery" nillable="true" type="q82:Delivery"/>
+<xs:element xmlns:q83="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q83:Distributor"/>
+<xs:element xmlns:q84="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q84:ExternalOrderAssociation"/>
+<xs:element xmlns:q85="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q85:FinancialData"/>
+<xs:element xmlns:q86="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q86:RenewalLicenseInfo"/>
+<xs:element minOccurs="0" name="PromotionCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q87="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="RenewingLicenseIdentity" nillable="true" type="q87:LicenseIdentity"/>
+<xs:element xmlns:q88="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q88:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q89="http://schemas.kaspersky.com/korm/3.0/orders" name="RenewalOrderRequest" nillable="true" type="q89:RenewalOrderRequest"/>
+<xs:complexType name="AdditionalData">
+<xs:sequence>
+<xs:element xmlns:q90="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="SalesSupport" nillable="true" type="q90:SalesSupport"/>
+<xs:element xmlns:q91="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TrackingParameters" nillable="true" type="q91:ArrayOfTrackingParameter"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q92="http://schemas.kaspersky.com/korm/3.0/orders" name="AdditionalData" nillable="true" type="q92:AdditionalData"/>
+<xs:complexType name="RenewalLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q93="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q93:RenewalTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q94="http://schemas.kaspersky.com/korm/3.0/orders" name="RenewalLicenseInfo" nillable="true" type="q94:RenewalLicenseInfo"/>
+<xs:complexType name="RenewalTerm">
+<xs:sequence>
+<xs:element xmlns:q95="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q95:RenewalFreeTerm"/>
+<xs:element minOccurs="0" name="PaidTermDays" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q96="http://schemas.kaspersky.com/korm/3.0/orders" name="RenewalTerm" nillable="true" type="q96:RenewalTerm"/>
+<xs:complexType name="RenewalFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DaysAfter" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q97="http://schemas.kaspersky.com/korm/3.0/orders" name="RenewalFreeTerm" nillable="true" type="q97:RenewalFreeTerm"/>
+<xs:element name="PlaceRenewalOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q98="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceRenewalOrderResult" nillable="true" type="q98:PlaceOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PlaceExtendingOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q99="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q99:ExtendingOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="ExtendingOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q100="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q100:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q101="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q101:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q102="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q102:Customer"/>
+<xs:element xmlns:q103="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Delivery" nillable="true" type="q103:Delivery"/>
+<xs:element xmlns:q104="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q104:Distributor"/>
+<xs:element xmlns:q105="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExtendingLicenseIdentity" nillable="true" type="q105:LicenseIdentity"/>
+<xs:element xmlns:q106="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q106:ExternalOrderAssociation"/>
+<xs:element xmlns:q107="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q107:FinancialData"/>
+<xs:element xmlns:q108="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q108:ExtendingLicenseInfo"/>
+<xs:element minOccurs="0" name="PromotionCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q109="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q109:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q110="http://schemas.kaspersky.com/korm/3.0/orders" name="ExtendingOrderRequest" nillable="true" type="q110:ExtendingOrderRequest"/>
+<xs:complexType name="ExtendingLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q111="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q111:ExtendingTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q112="http://schemas.kaspersky.com/korm/3.0/orders" name="ExtendingLicenseInfo" nillable="true" type="q112:ExtendingLicenseInfo"/>
+<xs:complexType name="ExtendingTerm">
+<xs:sequence>
+<xs:element xmlns:q113="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q113:ExtendingFreeTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q114="http://schemas.kaspersky.com/korm/3.0/orders" name="ExtendingTerm" nillable="true" type="q114:ExtendingTerm"/>
+<xs:complexType name="ExtendingFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DaysBefore" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q115="http://schemas.kaspersky.com/korm/3.0/orders" name="ExtendingFreeTerm" nillable="true" type="q115:ExtendingFreeTerm"/>
+<xs:element name="PlaceExtendingOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q116="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceExtendingOrderResult" nillable="true" type="q116:PlaceOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PlaceTradeInOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q117="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q117:TradeInOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="TradeInOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q118="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q118:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q119="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q119:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q120="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ConvertingLicenseIdentity" nillable="true" type="q120:LicenseIdentity"/>
+<xs:element xmlns:q121="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Customer" nillable="true" type="q121:Customer"/>
+<xs:element xmlns:q122="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Delivery" nillable="true" type="q122:Delivery"/>
+<xs:element xmlns:q123="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q123:Distributor"/>
+<xs:element xmlns:q124="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q124:ExternalOrderAssociation"/>
+<xs:element xmlns:q125="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q125:FinancialData"/>
+<xs:element xmlns:q126="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q126:TradeInLicenseInfo"/>
+<xs:element minOccurs="0" name="PromotionCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q127="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q127:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q128="http://schemas.kaspersky.com/korm/3.0/orders" name="TradeInOrderRequest" nillable="true" type="q128:TradeInOrderRequest"/>
+<xs:complexType name="TradeInLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q129="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q129:TradeInTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q130="http://schemas.kaspersky.com/korm/3.0/orders" name="TradeInLicenseInfo" nillable="true" type="q130:TradeInLicenseInfo"/>
+<xs:complexType name="TradeInTerm">
+<xs:sequence>
+<xs:element xmlns:q131="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q131:TradeInFreeTerm"/>
+<xs:element minOccurs="0" name="PaidTermDays" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q132="http://schemas.kaspersky.com/korm/3.0/orders" name="TradeInTerm" nillable="true" type="q132:TradeInTerm"/>
+<xs:complexType name="TradeInFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DaysAfter" type="xs:int"/>
+<xs:element minOccurs="0" name="DaysBefore" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q133="http://schemas.kaspersky.com/korm/3.0/orders" name="TradeInFreeTerm" nillable="true" type="q133:TradeInFreeTerm"/>
+<xs:element name="PlaceTradeInOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q134="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceTradeInOrderResult" nillable="true" type="q134:PlaceOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PlaceCrossGradeOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q135="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q135:CrossGradeOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="CrossGradeOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q136="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q136:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q137="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q137:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q138="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q138:Customer"/>
+<xs:element xmlns:q139="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Delivery" nillable="true" type="q139:Delivery"/>
+<xs:element xmlns:q140="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q140:Distributor"/>
+<xs:element xmlns:q141="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q141:ExternalOrderAssociation"/>
+<xs:element xmlns:q142="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q142:FinancialData"/>
+<xs:element xmlns:q143="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q143:CrossGradeLicenseInfo"/>
+<xs:element minOccurs="0" name="PromotionCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q144="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q144:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q145="http://schemas.kaspersky.com/korm/3.0/orders" name="CrossGradeOrderRequest" nillable="true" type="q145:CrossGradeOrderRequest"/>
+<xs:complexType name="CrossGradeLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element xmlns:q146="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="LicenseRestrictions" nillable="true" type="q146:CrossGradeLicenseRestrictions"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element minOccurs="0" name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q147="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q147:CrossGradeTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q148="http://schemas.kaspersky.com/korm/3.0/orders" name="CrossGradeLicenseInfo" nillable="true" type="q148:CrossGradeLicenseInfo"/>
+<xs:complexType name="CrossGradeLicenseRestrictions">
+<xs:sequence>
+<xs:element minOccurs="0" name="FixedExpirationTime" nillable="true" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q149="http://schemas.kaspersky.com/korm/3.0/orders" name="CrossGradeLicenseRestrictions" nillable="true" type="q149:CrossGradeLicenseRestrictions"/>
+<xs:complexType name="CrossGradeTerm">
+<xs:sequence>
+<xs:element xmlns:q150="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExpirationStartingMoment" type="q150:ExpirationStartingMoment"/>
+<xs:element xmlns:q151="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q151:CrossGradeFreeTerm"/>
+<xs:element minOccurs="0" name="PaidTermDays" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q152="http://schemas.kaspersky.com/korm/3.0/orders" name="CrossGradeTerm" nillable="true" type="q152:CrossGradeTerm"/>
+<xs:complexType name="CrossGradeFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="CrossGradeDays" type="xs:int"/>
+<xs:element minOccurs="0" name="DaysAfter" type="xs:int"/>
+<xs:element minOccurs="0" name="DaysBefore" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q153="http://schemas.kaspersky.com/korm/3.0/orders" name="CrossGradeFreeTerm" nillable="true" type="q153:CrossGradeFreeTerm"/>
+<xs:element name="PlaceCrossGradeOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q154="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceCrossGradeOrderResult" nillable="true" type="q154:PlaceOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PlaceServiceOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q155="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q155:ServiceOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="ServiceOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q156="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q156:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q157="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q157:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q158="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q158:Customer"/>
+<xs:element xmlns:q159="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q159:Distributor"/>
+<xs:element xmlns:q160="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ElectronicDelivery" nillable="true" type="q160:ElectronicDelivery"/>
+<xs:element xmlns:q161="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q161:ExternalOrderAssociation"/>
+<xs:element xmlns:q162="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q162:FinancialData"/>
+<xs:element xmlns:q163="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q163:ServiceLicenseInfo"/>
+<xs:element minOccurs="0" name="PromotionCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q164="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ServiceStartDate" type="q164:DateTimeOffset"/>
+<xs:element xmlns:q165="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q165:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q166="http://schemas.kaspersky.com/korm/3.0/orders" name="ServiceOrderRequest" nillable="true" type="q166:ServiceOrderRequest"/>
+<xs:complexType name="ServiceLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q167="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q167:ServiceTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q168="http://schemas.kaspersky.com/korm/3.0/orders" name="ServiceLicenseInfo" nillable="true" type="q168:ServiceLicenseInfo"/>
+<xs:complexType name="ServiceTerm">
+<xs:sequence>
+<xs:element xmlns:q169="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q169:ServiceFreeTerm"/>
+<xs:element minOccurs="0" name="PaidTermDays" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q170="http://schemas.kaspersky.com/korm/3.0/orders" name="ServiceTerm" nillable="true" type="q170:ServiceTerm"/>
+<xs:complexType name="ServiceFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DaysAfter" type="xs:int"/>
+<xs:element minOccurs="0" name="DaysBefore" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q171="http://schemas.kaspersky.com/korm/3.0/orders" name="ServiceFreeTerm" nillable="true" type="q171:ServiceFreeTerm"/>
+<xs:element name="PlaceServiceOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q172="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceServiceOrderResult" nillable="true" type="q172:PlaceServiceOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="PlaceServiceOrderSyncOperationResult">
+<xs:sequence>
+<xs:element xmlns:q173="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Data" nillable="true" type="q173:SyncServiceOrderResponse"/>
+<xs:element xmlns:q174="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ErrorCode" nillable="true" type="q174:ErrorCode"/>
+<xs:element minOccurs="0" name="ErrorId" nillable="true" type="ser:guid"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Succeeded" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q175="http://schemas.kaspersky.com/korm/3.0/orders" name="PlaceServiceOrderSyncOperationResult" nillable="true" type="q175:PlaceServiceOrderSyncOperationResult"/>
+<xs:complexType name="SyncServiceOrderResponse">
+<xs:sequence>
+<xs:element xmlns:q176="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialResults" nillable="true" type="q176:FinancialResults"/>
+<xs:element minOccurs="0" name="KormOrderNumber" nillable="true" type="xs:string"/>
+<xs:element xmlns:q177="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="OrderResultDetails" nillable="true" type="q177:SyncServiceOrderResultDetails"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q178="http://schemas.kaspersky.com/korm/3.0/orders" name="SyncServiceOrderResponse" nillable="true" type="q178:SyncServiceOrderResponse"/>
+<xs:complexType name="SyncServiceOrderResultDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="LicenseTerm" type="xs:int"/>
+<xs:element xmlns:q179="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="LicenseTermDetails" nillable="true" type="q179:TermPeriod"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q180="http://schemas.kaspersky.com/korm/3.0/orders" name="SyncServiceOrderResultDetails" nillable="true" type="q180:SyncServiceOrderResultDetails"/>
+<xs:element name="PlaceGoodsOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q181="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q181:GoodsOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="GoodsOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q182="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q182:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q183="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q183:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q184="http://schemas.kaspersky.com/korm/3.0/orders" name="Customer" nillable="true" type="q184:Customer"/>
+<xs:element xmlns:q185="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q185:Distributor"/>
+<xs:element xmlns:q186="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q186:ExternalOrderAssociation"/>
+<xs:element xmlns:q187="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q187:FinancialData"/>
+<xs:element xmlns:q188="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q188:GoodsLicenseInfo"/>
+<xs:element xmlns:q189="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q189:TermsAndConditions"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q190="http://schemas.kaspersky.com/korm/3.0/orders" name="GoodsOrderRequest" nillable="true" type="q190:GoodsOrderRequest"/>
+<xs:complexType name="GoodsLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element name="Sku" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q191="http://schemas.kaspersky.com/korm/3.0/orders" name="GoodsLicenseInfo" nillable="true" type="q191:GoodsLicenseInfo"/>
+<xs:element name="PlaceGoodsOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q192="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceGoodsOrderResult" nillable="true" type="q192:PlaceGoodsOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="PlaceGoodsOrderSyncOperationResult">
+<xs:sequence>
+<xs:element xmlns:q193="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Data" nillable="true" type="q193:SyncGoodsOrderResponse"/>
+<xs:element xmlns:q194="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ErrorCode" nillable="true" type="q194:ErrorCode"/>
+<xs:element minOccurs="0" name="ErrorId" nillable="true" type="ser:guid"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Succeeded" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q195="http://schemas.kaspersky.com/korm/3.0/orders" name="PlaceGoodsOrderSyncOperationResult" nillable="true" type="q195:PlaceGoodsOrderSyncOperationResult"/>
+<xs:complexType name="SyncGoodsOrderResponse">
+<xs:sequence>
+<xs:element xmlns:q196="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialResults" nillable="true" type="q196:FinancialResults"/>
+<xs:element minOccurs="0" name="KormOrderNumber" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q197="http://schemas.kaspersky.com/korm/3.0/orders" name="SyncGoodsOrderResponse" nillable="true" type="q197:SyncGoodsOrderResponse"/>
+<xs:element name="PlaceStockOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q198="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q198:StockOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="StockOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q199="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AdditionalData" nillable="true" type="q199:AdditionalData"/>
+<xs:element minOccurs="0" name="AffiliateDiscountCode" nillable="true" type="xs:string"/>
+<xs:element xmlns:q200="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="AssociatedOrderIdentity" nillable="true" type="q200:OrderIdentity"/>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element xmlns:q201="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Delivery" nillable="true" type="q201:Delivery"/>
+<xs:element xmlns:q202="http://schemas.kaspersky.com/korm/3.0/orders" name="Distributor" nillable="true" type="q202:Distributor"/>
+<xs:element xmlns:q203="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q203:ExternalOrderAssociation"/>
+<xs:element xmlns:q204="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseInfo" nillable="true" type="q204:StockLicenseInfo"/>
+<xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q205="http://schemas.kaspersky.com/korm/3.0/orders" name="StockOrderRequest" nillable="true" type="q205:StockOrderRequest"/>
+<xs:complexType name="StockLicenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string"/>
+<xs:element xmlns:q206="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="LicenseRestrictions" nillable="true" type="q206:StockLicenseRestrictions"/>
+<xs:element minOccurs="0" name="Quantity" type="xs:int"/>
+<xs:element name="Sku" nillable="true" type="xs:string"/>
+<xs:element xmlns:q207="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Term" nillable="true" type="q207:StockTerm"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q208="http://schemas.kaspersky.com/korm/3.0/orders" name="StockLicenseInfo" nillable="true" type="q208:StockLicenseInfo"/>
+<xs:complexType name="StockLicenseRestrictions">
+<xs:sequence>
+<xs:element minOccurs="0" name="FixedExpirationTime" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="InitiallyBlocked" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q209="http://schemas.kaspersky.com/korm/3.0/orders" name="StockLicenseRestrictions" nillable="true" type="q209:StockLicenseRestrictions"/>
+<xs:complexType name="StockTerm">
+<xs:sequence>
+<xs:element xmlns:q210="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FreeTerm" nillable="true" type="q210:StockFreeTerm"/>
+<xs:element minOccurs="0" name="PaidTermDays" nillable="true" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q211="http://schemas.kaspersky.com/korm/3.0/orders" name="StockTerm" nillable="true" type="q211:StockTerm"/>
+<xs:complexType name="StockFreeTerm">
+<xs:sequence>
+<xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="DaysAfter" type="xs:int"/>
+<xs:element minOccurs="0" name="DaysBefore" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q212="http://schemas.kaspersky.com/korm/3.0/orders" name="StockFreeTerm" nillable="true" type="q212:StockFreeTerm"/>
+<xs:element name="PlaceStockOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q213="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="PlaceStockOrderResult" nillable="true" type="q213:PlaceStockOrderSyncOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="PlaceStockOrderSyncOperationResult">
+<xs:sequence>
+<xs:element xmlns:q214="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Data" nillable="true" type="q214:SyncStockOrderResponse"/>
+<xs:element xmlns:q215="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ErrorCode" nillable="true" type="q215:ErrorCode"/>
+<xs:element minOccurs="0" name="ErrorId" nillable="true" type="ser:guid"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Succeeded" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q216="http://schemas.kaspersky.com/korm/3.0/orders" name="PlaceStockOrderSyncOperationResult" nillable="true" type="q216:PlaceStockOrderSyncOperationResult"/>
+<xs:complexType name="SyncStockOrderResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="KormOrderNumber" nillable="true" type="xs:string"/>
+<xs:element xmlns:q217="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="OrderResultDetails" nillable="true" type="q217:SyncOrderResultDetails"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q218="http://schemas.kaspersky.com/korm/3.0/orders" name="SyncStockOrderResponse" nillable="true" type="q218:SyncStockOrderResponse"/>
+<xs:element name="WithdrawOrder">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q219="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q219:WithdrawOrderRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="WithdrawOrderRequest">
+<xs:sequence>
+<xs:element xmlns:q220="http://schemas.kaspersky.com/korm/3.0/orders" name="OrderIdentity" nillable="true" type="q220:OrderIdentity"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q221="http://schemas.kaspersky.com/korm/3.0/orders" name="WithdrawOrderRequest" nillable="true" type="q221:WithdrawOrderRequest"/>
+<xs:element name="WithdrawOrderResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q222="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="WithdrawOrderResult" nillable="true" type="q222:OperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="OperationResult">
+<xs:sequence>
+<xs:element xmlns:q223="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ErrorCode" nillable="true" type="q223:ErrorCode"/>
+<xs:element minOccurs="0" name="ErrorId" nillable="true" type="ser:guid"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Succeeded" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q224="http://schemas.kaspersky.com/korm/3.0/orders" name="OperationResult" nillable="true" type="q224:OperationResult"/>
+<xs:element name="BindOrderToExternalSystem">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q225="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q225:BindOrderToExternalSystemRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="BindOrderToExternalSystemRequest">
+<xs:sequence>
+<xs:element xmlns:q226="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ExternalOrderAssociation" nillable="true" type="q226:ExternalOrderAssociation"/>
+<xs:element xmlns:q227="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="OrderIdentity" nillable="true" type="q227:OrderIdentity"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q228="http://schemas.kaspersky.com/korm/3.0/orders" name="BindOrderToExternalSystemRequest" nillable="true" type="q228:BindOrderToExternalSystemRequest"/>
+<xs:element name="BindOrderToExternalSystemResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q229="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="BindOrderToExternalSystemResult" nillable="true" type="q229:OperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="RetrieveOrderArtifacts">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q230="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q230:RetrieveOrderArtifactsRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="RetrieveOrderArtifactsRequest">
+<xs:sequence>
+<xs:element xmlns:q231="http://schemas.kaspersky.com/korm/3.0/orders" name="OrderIdentity" nillable="true" type="q231:OrderIdentity"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q232="http://schemas.kaspersky.com/korm/3.0/orders" name="RetrieveOrderArtifactsRequest" nillable="true" type="q232:RetrieveOrderArtifactsRequest"/>
+<xs:element name="RetrieveOrderArtifactsResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q233="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="RetrieveOrderArtifactsResult" nillable="true" type="q233:RetrieveOrderArtifactsOperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="RetrieveOrderArtifactsOperationResult">
+<xs:sequence>
+<xs:element xmlns:q234="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Data" nillable="true" type="q234:OrderArtifacts"/>
+<xs:element xmlns:q235="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="ErrorCode" nillable="true" type="q235:ErrorCode"/>
+<xs:element minOccurs="0" name="ErrorId" nillable="true" type="ser:guid"/>
+<xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Succeeded" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q236="http://schemas.kaspersky.com/korm/3.0/orders" name="RetrieveOrderArtifactsOperationResult" nillable="true" type="q236:RetrieveOrderArtifactsOperationResult"/>
+<xs:complexType name="OrderArtifacts">
+<xs:sequence>
+<xs:element xmlns:q237="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Licenses" nillable="true" type="q237:ArrayOfLicenseArtifacts"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q238="http://schemas.kaspersky.com/korm/3.0/orders" name="OrderArtifacts" nillable="true" type="q238:OrderArtifacts"/>
+<xs:complexType name="ArrayOfLicenseArtifacts">
+<xs:sequence>
+<xs:element xmlns:q239="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" maxOccurs="unbounded" name="LicenseArtifacts" nillable="true" type="q239:LicenseArtifacts"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q240="http://schemas.kaspersky.com/korm/3.0/orders" name="ArrayOfLicenseArtifacts" nillable="true" type="q240:ArrayOfLicenseArtifacts"/>
+<xs:complexType name="LicenseArtifacts">
+<xs:sequence>
+<xs:element minOccurs="0" name="ActivationCode" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="LicenseId" type="ser:guid"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q241="http://schemas.kaspersky.com/korm/3.0/orders" name="LicenseArtifacts" nillable="true" type="q241:LicenseArtifacts"/>
+<xs:element name="RegisterSale">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q242="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q242:RegisterSaleRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="RegisterSaleRequest">
+<xs:sequence>
+<xs:element xmlns:q243="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Customer" nillable="true" type="q243:RegisterSaleCustomer"/>
+<xs:element xmlns:q244="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="FinancialData" nillable="true" type="q244:FinancialData"/>
+<xs:element xmlns:q245="http://schemas.kaspersky.com/korm/3.0/orders" name="OrderIdentity" nillable="true" type="q245:OrderIdentity"/>
+<xs:element xmlns:q246="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="TermsAndConditions" nillable="true" type="q246:TermsAndConditions"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q247="http://schemas.kaspersky.com/korm/3.0/orders" name="RegisterSaleRequest" nillable="true" type="q247:RegisterSaleRequest"/>
+<xs:complexType name="RegisterSaleCustomer">
+<xs:sequence>
+<xs:element xmlns:q248="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Address" nillable="true" type="q248:Address"/>
+<xs:element xmlns:q249="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="Contacts" nillable="true" type="q249:Contacts"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q250="http://schemas.kaspersky.com/korm/3.0/orders" name="RegisterSaleCustomer" nillable="true" type="q250:RegisterSaleCustomer"/>
+<xs:element name="RegisterSaleResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q251="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="RegisterSaleResult" nillable="true" type="q251:OperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="UnregisterSale">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q252="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="request" nillable="true" type="q252:UnregisterSaleRequest"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="UnregisterSaleRequest">
+<xs:sequence>
+<xs:element xmlns:q253="http://schemas.kaspersky.com/korm/3.0/orders" name="OrderIdentity" nillable="true" type="q253:OrderIdentity"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element xmlns:q254="http://schemas.kaspersky.com/korm/3.0/orders" name="UnregisterSaleRequest" nillable="true" type="q254:UnregisterSaleRequest"/>
+<xs:element name="UnregisterSaleResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q255="http://schemas.kaspersky.com/korm/3.0/orders" minOccurs="0" name="UnregisterSaleResult" nillable="true" type="q255:OperationResult"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+<xs:element name="anyType" nillable="true" type="xs:anyType"/>
+<xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+<xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+<xs:element name="boolean" nillable="true" type="xs:boolean"/>
+<xs:element name="byte" nillable="true" type="xs:byte"/>
+<xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+<xs:element name="decimal" nillable="true" type="xs:decimal"/>
+<xs:element name="double" nillable="true" type="xs:double"/>
+<xs:element name="float" nillable="true" type="xs:float"/>
+<xs:element name="int" nillable="true" type="xs:int"/>
+<xs:element name="long" nillable="true" type="xs:long"/>
+<xs:element name="QName" nillable="true" type="xs:QName"/>
+<xs:element name="short" nillable="true" type="xs:short"/>
+<xs:element name="string" nillable="true" type="xs:string"/>
+<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+<xs:element name="char" nillable="true" type="tns:char"/>
+<xs:simpleType name="char">
+<xs:restriction base="xs:int"/>
+</xs:simpleType>
+<xs:element name="duration" nillable="true" type="tns:duration"/>
+<xs:simpleType name="duration">
+<xs:restriction base="xs:duration">
+<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="guid" nillable="true" type="tns:guid"/>
+<xs:simpleType name="guid">
+<xs:restriction base="xs:string">
+<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:attribute name="FactoryType" type="xs:QName"/>
+<xs:attribute name="Id" type="xs:ID"/>
+<xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+<xs:complexType name="ArrayOfstring">
+<xs:sequence>
+<xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System">
+<xs:complexType name="DateTimeOffset">
+<xs:annotation>
+<xs:appinfo>
+<IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+</xs:appinfo>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="DateTime" type="xs:dateTime"/>
+<xs:element name="OffsetMinutes" type="xs:short"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="DateTimeOffset" nillable="true" type="tns:DateTimeOffset"/>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="IOrderManagementSync_PlaceInitialOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceInitialOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceInitialOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceInitialOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceRenewalOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceRenewalOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceRenewalOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceRenewalOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceExtendingOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceExtendingOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceExtendingOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceExtendingOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceTradeInOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceTradeInOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceTradeInOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceTradeInOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceCrossGradeOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceCrossGradeOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceCrossGradeOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceCrossGradeOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceServiceOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceServiceOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceServiceOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceServiceOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceGoodsOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceGoodsOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceGoodsOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceGoodsOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceStockOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:PlaceStockOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_PlaceStockOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:PlaceStockOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_WithdrawOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:WithdrawOrder"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_WithdrawOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:WithdrawOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_BindOrderToExternalSystem_InputMessage">
+<wsdl:part name="parameters" element="tns:BindOrderToExternalSystem"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_BindOrderToExternalSystem_OutputMessage">
+<wsdl:part name="parameters" element="tns:BindOrderToExternalSystemResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_RetrieveOrderArtifacts_InputMessage">
+<wsdl:part name="parameters" element="tns:RetrieveOrderArtifacts"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_RetrieveOrderArtifacts_OutputMessage">
+<wsdl:part name="parameters" element="tns:RetrieveOrderArtifactsResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_RegisterSale_InputMessage">
+<wsdl:part name="parameters" element="tns:RegisterSale"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_RegisterSale_OutputMessage">
+<wsdl:part name="parameters" element="tns:RegisterSaleResponse"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_UnregisterSale_InputMessage">
+<wsdl:part name="parameters" element="tns:UnregisterSale"/>
+</wsdl:message>
+<wsdl:message name="IOrderManagementSync_UnregisterSale_OutputMessage">
+<wsdl:part name="parameters" element="tns:UnregisterSaleResponse"/>
+</wsdl:message>
+<wsdl:portType name="IOrderManagementSync">
+<wsdl:operation name="PlaceInitialOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceInitialOrder" message="tns:IOrderManagementSync_PlaceInitialOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceInitialOrderResponse" message="tns:IOrderManagementSync_PlaceInitialOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceRenewalOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceRenewalOrder" message="tns:IOrderManagementSync_PlaceRenewalOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceRenewalOrderResponse" message="tns:IOrderManagementSync_PlaceRenewalOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceExtendingOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceExtendingOrder" message="tns:IOrderManagementSync_PlaceExtendingOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceExtendingOrderResponse" message="tns:IOrderManagementSync_PlaceExtendingOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceTradeInOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceTradeInOrder" message="tns:IOrderManagementSync_PlaceTradeInOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceTradeInOrderResponse" message="tns:IOrderManagementSync_PlaceTradeInOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceCrossGradeOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceCrossGradeOrder" message="tns:IOrderManagementSync_PlaceCrossGradeOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceCrossGradeOrderResponse" message="tns:IOrderManagementSync_PlaceCrossGradeOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceServiceOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceServiceOrder" message="tns:IOrderManagementSync_PlaceServiceOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceServiceOrderResponse" message="tns:IOrderManagementSync_PlaceServiceOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceGoodsOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceGoodsOrder" message="tns:IOrderManagementSync_PlaceGoodsOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceGoodsOrderResponse" message="tns:IOrderManagementSync_PlaceGoodsOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="PlaceStockOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceStockOrder" message="tns:IOrderManagementSync_PlaceStockOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceStockOrderResponse" message="tns:IOrderManagementSync_PlaceStockOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="WithdrawOrder">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/WithdrawOrder" message="tns:IOrderManagementSync_WithdrawOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/WithdrawOrderResponse" message="tns:IOrderManagementSync_WithdrawOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="BindOrderToExternalSystem">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/BindOrderToExternalSystem" message="tns:IOrderManagementSync_BindOrderToExternalSystem_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/BindOrderToExternalSystemResponse" message="tns:IOrderManagementSync_BindOrderToExternalSystem_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="RetrieveOrderArtifacts">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/RetrieveOrderArtifacts" message="tns:IOrderManagementSync_RetrieveOrderArtifacts_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/RetrieveOrderArtifactsResponse" message="tns:IOrderManagementSync_RetrieveOrderArtifacts_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="RegisterSale">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/RegisterSale" message="tns:IOrderManagementSync_RegisterSale_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/RegisterSaleResponse" message="tns:IOrderManagementSync_RegisterSale_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="UnregisterSale">
+<wsdl:input wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/UnregisterSale" message="tns:IOrderManagementSync_UnregisterSale_InputMessage"/>
+<wsdl:output wsaw:Action="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/UnregisterSaleResponse" message="tns:IOrderManagementSync_UnregisterSale_OutputMessage"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="CustomBinding_IOrderManagementSync" type="tns:IOrderManagementSync">
+<wsp:PolicyReference URI="#CustomBinding_IOrderManagementSync_policy"/>
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="PlaceInitialOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceInitialOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceRenewalOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceRenewalOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceExtendingOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceExtendingOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceTradeInOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceTradeInOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceCrossGradeOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceCrossGradeOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceServiceOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceServiceOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceGoodsOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceGoodsOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="PlaceStockOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceStockOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="WithdrawOrder">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/WithdrawOrder" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="BindOrderToExternalSystem">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/BindOrderToExternalSystem" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RetrieveOrderArtifacts">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/RetrieveOrderArtifacts" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RegisterSale">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/RegisterSale" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="UnregisterSale">
+<soap12:operation soapAction="http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/UnregisterSale" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="OrderManagementSync">
+<wsdl:port name="CustomBinding_IOrderManagementSync" binding="tns:CustomBinding_IOrderManagementSync">
+<soap12:address location="https://api.demo.korm.kaspersky.com/Orders/OrderManagementSync.svc"/>
+<wsa10:EndpointReference>
+<wsa10:Address>
+https://api.demo.korm.kaspersky.com/Orders/OrderManagementSync.svc
+</wsa10:Address>
+</wsa10:EndpointReference>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
