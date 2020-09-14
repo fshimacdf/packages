@@ -18,7 +18,7 @@ public class KasperskyRequestFactory {
 		request.append("<s:Body>");
 		request.append("<PlaceInitialOrder xmlns=\"http://schemas.kaspersky.com/korm/3.0/orders\">");
 		request.append("<request xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">");
-		request.append("	<Comment>Test order</Comment>");
+		request.append("	<Comment>").append(idClienteContrato).append("</Comment>");
 		request.append("	<Customer>");
 		request.append("		<Address>");
 		request.append("			<AddressLine1>Pedroso de Moraes, 1619</AddressLine1>");
@@ -50,7 +50,7 @@ public class KasperskyRequestFactory {
 //		request.append("</PartnerPrice>");
 //		request.append("</FinancialData>");
 		request.append("<LicenseInfo>");
-		request.append("	<Comments>Test</Comments>");
+		request.append("	<Comments>").append(idClienteContrato).append("</Comments>");
 		request.append("	<LicenseType>Commercial</LicenseType>"); // <!-- Possible values: Commercial. Other ones are only for internal use. -->
 		request.append("	<Quantity>").append(quantidade).append("</Quantity>");
 		request.append("	<Sku>").append(sku).append("</Sku>"); // <!-- Code of KL product, you may find it in pricelist from KL Sales Manager -->"
