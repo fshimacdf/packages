@@ -3,7 +3,7 @@ package net.cdf.kaspersky.dto;
 import lombok.Data;
 
 @Data
-public class Result {
+public class Result {//TESTE
 	private Boolean succeeded;
 	private String errorCode;
 	private String errorId;
