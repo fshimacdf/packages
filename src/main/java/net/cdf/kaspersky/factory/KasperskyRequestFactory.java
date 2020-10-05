@@ -3,13 +3,17 @@ package net.cdf.kaspersky.factory;
 import org.apache.commons.lang.StringUtils;
 
 public class KasperskyRequestFactory {
-	private static final int TEST = 1;
+//	private static final int TEST = 1;
 	private static String PARTNER = "CDF";
 	private static String PIN = "";// "TE27PT00";
 //	private static String valor = "11.00";
 	private static String currency = "BRL";
 	
 	public static String createOrder(String sku, int quantidade, Long idClienteContrato, String nome, String valor) {
+		return createOrder(sku, quantidade, idClienteContrato, nome, valor, 0);
+	}
+	
+	public static String createOrder(String sku, int quantidade, Long idClienteContrato, String nome, String valor, int flgTestOrder) {
 		StringBuilder request = new StringBuilder();
 		request.append("<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\">");
 		request.append("<s:Header>");
@@ -59,7 +63,9 @@ public class KasperskyRequestFactory {
 		request.append("	</Term>");
 		request.append("</LicenseInfo>");
 //		request.append("<!--<PromotionCode>AAA-BBB</PromotionCode>-->"); // <!-- Promotion code for additional discount. Can be requested from KL Sales Manager, if discussed -->
-		request.append("<TestOrder>").append(TEST).append("</TestOrder>"); // <!-- The order will not be invoiced, and cannot be sales order -->
+		if(flgTestOrder == 1) {
+			request.append("<TestOrder>").append(flgTestOrder).append("</TestOrder>"); // <!-- The order will not be invoiced, and cannot be sales order -->
+		}
 		request.append("<TransactionId>").append(StringUtils.leftPad("" + idClienteContrato, 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
 		request.append("</request>");
 		request.append("</PlaceInitialOrder>");
