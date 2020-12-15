@@ -1,9 +1,7 @@
 package net.cdf.kaspersky.client;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,8 @@ public class KasperskyClient {
 	public static final String ENDPOINT = "https://api.korm.kaspersky.com/Orders/OrderManagementSync.svc";
 	
 	public static void main(String[] args) throws Exception {
-		Result result = createOrder("KL1962KDAFS", 1, 11111l, "Jose Reinaldo");
+//		Result result = createOrder("KL1962KDAFS", 1, 11111l, "Jose Reinaldo");
+		Result result = retrieveResponse("2BC0-201203-060230-5-26420");
 		log.info(result + System.getProperty("line.separator"));
 		
 //		result = retrieveResponse("9850-190809-161903-12-26");
@@ -62,7 +61,7 @@ public class KasperskyClient {
 	}
 
 	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente) throws Exception {
-		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "1619Cdf2016!!");
+		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "Cdf@2020");//1619Cdf2016
 		String envelop = KasperskyRequestFactory.createOrder(sku, qtd, idClienteContrato, nomeCliente, retornoValor(sku));
 		HttpResponse ret = cli.postWithSSL(ENDPOINT, 443, envelop);
 		String resp = cli.fromResponse(ret);
@@ -88,7 +87,7 @@ public class KasperskyClient {
 	}
 
 	public static Result retrieveResponse(String kormOrderNumber) throws Exception {
-		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "1619Cdf2016!!");
+		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "Cdf@2020");
 		String envelop = KasperskyRequestFactory.retrieveOrderArtifacts(kormOrderNumber);
 		HttpResponse ret = cli.postWithSSL(ENDPOINT, 443, envelop);
 		String resp = cli.fromResponse(ret);
@@ -110,7 +109,7 @@ public class KasperskyClient {
 	}
 	
 	public static Result cancelResponse(String kormOrderNumber) throws Exception {
-		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "1619Cdf2016!!");
+		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "Cdf@2020");
 		String envelop = KasperskyRequestFactory.cancelOrder(kormOrderNumber);
 		HttpResponse ret = cli.postWithSSL(ENDPOINT, 443, envelop);
 		String resp = cli.fromResponse(ret);
