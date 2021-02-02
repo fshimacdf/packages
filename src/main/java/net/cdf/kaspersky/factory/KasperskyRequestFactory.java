@@ -22,7 +22,13 @@ public class KasperskyRequestFactory {
 		request.append("<s:Body>");
 		request.append("<PlaceInitialOrder xmlns=\"http://schemas.kaspersky.com/korm/3.0/orders\">");
 		request.append("<request xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">");
-		request.append("	<Comment>").append(idClienteContrato).append("</Comment>");
+		
+		if(flgTestOrder == 1) {
+			request.append("	<Comment>H").append(idClienteContrato).append("</Comment>");
+		} else {
+			request.append("	<Comment>").append(idClienteContrato).append("</Comment>");
+		}
+		
 		request.append("	<Customer>");
 		request.append("		<Address>");
 		request.append("			<AddressLine1>Pedroso de Moraes, 1619</AddressLine1>");
@@ -53,8 +59,12 @@ public class KasperskyRequestFactory {
 //		request.append("	<Value>").append(valor).append("</Value>");
 //		request.append("</PartnerPrice>");
 //		request.append("</FinancialData>");
-		request.append("<LicenseInfo>");
-		request.append("	<Comments>").append(idClienteContrato).append("</Comments>");
+		request.append("<LicenseInfo>");		
+		if(flgTestOrder == 1) {
+			request.append("	<Comments>H").append(idClienteContrato).append("</Comments>");
+		} else {
+			request.append("	<Comments>").append(idClienteContrato).append("</Comments>");
+		}
 		request.append("	<LicenseType>Commercial</LicenseType>"); // <!-- Possible values: Commercial. Other ones are only for internal use. -->
 		request.append("	<Quantity>").append(quantidade).append("</Quantity>");
 		request.append("	<Sku>").append(sku).append("</Sku>"); // <!-- Code of KL product, you may find it in pricelist from KL Sales Manager -->"
@@ -65,8 +75,10 @@ public class KasperskyRequestFactory {
 //		request.append("<!--<PromotionCode>AAA-BBB</PromotionCode>-->"); // <!-- Promotion code for additional discount. Can be requested from KL Sales Manager, if discussed -->
 		if(flgTestOrder == 1) {
 			request.append("<TestOrder>").append(flgTestOrder).append("</TestOrder>"); // <!-- The order will not be invoiced, and cannot be sales order -->
+			request.append("<TransactionId>").append(StringUtils.leftPad("H" + idClienteContrato, 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
+		} else {
+			request.append("<TransactionId>").append(StringUtils.leftPad("" + idClienteContrato, 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
 		}
-		request.append("<TransactionId>").append(StringUtils.leftPad("" + idClienteContrato, 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
 		request.append("</request>");
 		request.append("</PlaceInitialOrder>");
 		request.append("</s:Body>");

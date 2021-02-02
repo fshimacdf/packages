@@ -57,12 +57,20 @@ public class KasperskyClient {
 	} 
 	
 	public static Result createOrder(String sku,int qtd,Long idClienteContrato) throws Exception {
-		return createOrder(sku, qtd, idClienteContrato, null);
+		return createOrder(sku, qtd, idClienteContrato, null, 0);
+	}
+	
+	public static Result createOrder(String sku,int qtd,Long idClienteContrato, int flTest) throws Exception {
+		return createOrder(sku, qtd, idClienteContrato, null, flTest);
+	}
+	
+	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente) throws Exception {
+		return createOrder(sku, qtd, idClienteContrato, nomeCliente, 0);
 	}
 
-	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente) throws Exception {
+	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente, int flTest) throws Exception {
 		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "Cdf@2020");//1619Cdf2016
-		String envelop = KasperskyRequestFactory.createOrder(sku, qtd, idClienteContrato, nomeCliente, retornoValor(sku));
+		String envelop = KasperskyRequestFactory.createOrder(sku, qtd, idClienteContrato, nomeCliente, retornoValor(sku), flTest);
 		HttpResponse ret = cli.postWithSSL(ENDPOINT, 443, envelop);
 		String resp = cli.fromResponse(ret);
 		log.info("RESPONSE:" + resp + System.getProperty("line.separator"));

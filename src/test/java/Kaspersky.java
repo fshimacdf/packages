@@ -26,7 +26,7 @@ public class Kaspersky {
 
 		String endpoint = "https://api.korm.kaspersky.com/Orders/OrderManagementSync.svc";
 
-		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(new File("C:/KEYS/KORM_PRD.pfx"), "1619Cdf2016!!");
+		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(new File("C:/KEYS/KORM_PRD.pfx"), "Cdf@2020");
 
 		String envelop;
 		HttpResponse ret;
@@ -42,11 +42,12 @@ public class Kaspersky {
 		
 //		for (String item : lst) {
 //			Long nrCont = new Long(1520000+i); 
-			envelop = KasperskyRequestFactory.createOrder("KL1962KDAFS", 1, 14000l, "Jose Reinaldo","");//12000
-			ret = cli.postWithSSL(endpoint, 443, envelop);
-			resp = cli.fromResponse(ret);
-			log.info(resp + System.getProperty("line.separator"));
-			orderResponse(resp);
+//			envelop = KasperskyRequestFactory.createOrder("KL1962KDAFS", 1, 1405l, "Jose Reinaldo","",1);//12000
+//			ret = cli.postWithSSL(endpoint, 443, envelop);
+//			resp = cli.fromResponse(ret);
+//			log.info(resp + System.getProperty("line.separator"));
+//			orderResponse(resp);
+
 //			i++;
 			
 //			log.info("--------------------------------------------------------------------------------------------------------");
@@ -57,11 +58,11 @@ public class Kaspersky {
 //			log.info(resp + System.getProperty("line.separator"));
 //			retrieveResponse(resp);
 //			
-//			envelop = KasperskyRequestFactory.cancelOrder("9850-190822-230528-11-41");
-//			ret = cli.postWithSSL(endpoint, 443, envelop);
-//			resp = cli.fromResponse(ret);
-//			log.info(resp + System.getProperty("line.separator"));
-//			cancelResponse(resp);
+			envelop = KasperskyRequestFactory.cancelOrder("2BC0-210201-140839-2-1143");
+			ret = cli.postWithSSL(endpoint, 443, envelop);
+			resp = cli.fromResponse(ret);
+			log.info(resp + System.getProperty("line.separator"));
+			cancelResponse(resp);
 		
 //		}
 		
