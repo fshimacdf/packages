@@ -1,5 +1,7 @@
 package net.cdf.kaspersky.factory;
 
+import java.text.Normalizer;
+
 import org.apache.commons.lang.StringUtils;
 
 public class KasperskyRequestFactory {
@@ -40,7 +42,7 @@ public class KasperskyRequestFactory {
 		request.append("		</Address>");
 		if(nome != null) {
 			request.append("		<Contacts>");
-			request.append("			<Name>").append(nome).append("</Name>");
+			request.append("			<Name>").append(Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")).append("</Name>");
 			request.append("		</Contacts>");
 		}
 		request.append("	</Customer>");
