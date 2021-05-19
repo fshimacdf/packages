@@ -11,15 +11,15 @@ public class KasperskyRequestFactory {
 //	private static String valor = "11.00";
 	private static String currency = "BRL";
 	
-	public static String createOrder(String sku, int quantidade, Long idClienteContrato, String nome, String valor) {
-		return createOrder(sku, quantidade, idClienteContrato, nome, valor, 0, null);
+	public static String createOrder(String sku, int quantidade, Long idClienteContrato, String nome, String valor, String idTransacao) {
+		return createOrder(sku, quantidade, idClienteContrato, nome, valor, 0, null, idTransacao);
 	}
 
-	public static String createOrderIdentificador(String sku, int quantidade, String identificador, String nome, String valor) {
-		return createOrder(sku, quantidade, null, nome, valor, 0, identificador);
+	public static String createOrderIdentificador(String sku, int quantidade, String identificador, String nome, String valor, String idTransacao) {
+		return createOrder(sku, quantidade, null, nome, valor, 0, identificador, idTransacao);
 	}
 	
-	public static String createOrder(String sku, int quantidade, Long idClienteContrato, String nome, String valor, int flgTestOrder, String identificador) {
+	public static String createOrder(String sku, int quantidade, Long idClienteContrato, String nome, String valor, int flgTestOrder, String identificador, String idTransacao) {
 		StringBuilder request = new StringBuilder();
 		request.append("<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\">");
 		request.append("<s:Header>");
@@ -81,9 +81,9 @@ public class KasperskyRequestFactory {
 //		request.append("<!--<PromotionCode>AAA-BBB</PromotionCode>-->"); // <!-- Promotion code for additional discount. Can be requested from KL Sales Manager, if discussed -->
 		if(flgTestOrder == 1) {
 			request.append("<TestOrder>").append(flgTestOrder).append("</TestOrder>"); // <!-- The order will not be invoiced, and cannot be sales order -->
-			request.append("<TransactionId>").append(StringUtils.leftPad("H" + (identificador!=null?identificador:idClienteContrato), 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
+			request.append("<TransactionId>").append(StringUtils.leftPad("H" + (identificador!=null?identificador:idTransacao), 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
 		} else {
-			request.append("<TransactionId>").append(StringUtils.leftPad("" + (identificador!=null?identificador:idClienteContrato), 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
+			request.append("<TransactionId>").append(StringUtils.leftPad((identificador!=null?identificador:idTransacao), 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
 		}
 		request.append("</request>");
 		request.append("</PlaceInitialOrder>");
