@@ -23,10 +23,13 @@ import net.cdf.kaspersky.factory.KasperskyRequestFactory;
 public class KasperskyClient {
 	public static final String ENDPOINT = "https://api.korm.kaspersky.com/Orders/OrderManagementSync.svc";
 	
-	public static void main(String[] args) throws Exception {
-//		Result result = createOrder("KL1962KDAFS", 1, 11111l, "Jose Reinaldo");
-		Result result = retrieveResponse("2BC0-201203-060230-5-26420");
+	public static void main(String[] args) throws Exception {		
+		Result result = createOrder("KL1939KDAMG",1, 1000l,"Jose Reinaldo", 1, "ML100");
+				
 		log.info(result + System.getProperty("line.separator"));
+		
+//		Result result = retrieveResponse("2BC0-201203-060230-5-26420");
+//		log.info(result + System.getProperty("line.separator"));
 		
 //		result = retrieveResponse("9850-190809-161903-12-26");
 //		log.info(result + System.getProperty("line.separator"));
@@ -57,7 +60,7 @@ public class KasperskyClient {
 	} 
 	
 	public static Result createOrder(String sku,int qtd,Long idClienteContrato, String idTransacao) throws Exception {
-		return createOrder(sku, qtd, idClienteContrato, null, 0, null, idTransacao);
+		return createOrder(sku, qtd, idClienteContrato, null, 1, null, idTransacao);
 	}
 	
 	public static Result createOrder(String sku,int qtd,Long idClienteContrato, int flTest, String idTransacao) throws Exception {
@@ -71,7 +74,48 @@ public class KasperskyClient {
 	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente, String idTransacao) throws Exception {
 		return createOrder(sku, qtd, idClienteContrato, nomeCliente, 0, null, idTransacao);
 	}
+	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente, int flTest, String idTransacao) throws Exception {
+		return createOrder(sku, qtd, idClienteContrato, nomeCliente, flTest, null, idTransacao);
+	}
+	
+	public static Result createOrderIdentificador(String sku,int qtd, String nomeCliente,String identificador, int flTest, String idTransacao) throws Exception {
+		return createOrder(sku, qtd, null, nomeCliente, flTest, identificador, idTransacao);
+	}
+	
+	public static Result renewalOrder(String sku,int qtd,String nomeCliente, int flTest, String idTransacao, String kormNumber) throws Exception {
+		return renewalOrder(sku, qtd, null, nomeCliente, flTest, null, idTransacao, kormNumber);
+	}
+	
+	public static Result renewalOrder(String sku,int qtd,String nomeCliente, int flTest, String identificador, String idTransacao, String kormNumber) throws Exception {
+		return renewalOrder(sku, qtd, null, nomeCliente, flTest, identificador, idTransacao, kormNumber);
+	}
 
+	public static Result renewalOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente, int flTest, String identificador, String idTransacao, String kormNumber) throws Exception {
+		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "Cdf@2020");//1619Cdf2016
+		String envelop = KasperskyRequestFactory.renewalOrder(sku, qtd, idClienteContrato, nomeCliente, flTest, identificador, idTransacao, kormNumber); 
+		HttpResponse ret = cli.postWithSSL(ENDPOINT, 443, envelop);
+		String resp = cli.fromResponse(ret);
+		log.info("RESPONSE:" + resp + System.getProperty("line.separator"));
+		
+		Result result = new Result();
+		InputStream is = new ByteArrayInputStream(resp.getBytes());
+		SOAPMessage response = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL).createMessage(new MimeHeaders(), is);
+		SOAPBody body = response.getSOAPBody();
+
+		result.setSucceeded(Boolean.parseBoolean(getValue(body, "Succeeded")));
+		result.setErrorCode(getValue(body, "ErrorCode"));
+		result.setErrorId(getValue(body, "ErrorId"));
+		result.setErrorMessage(getValue(body, "ErrorMessage"));
+		result.setCurrencyCode(getValue(body, "CurrencyCode"));
+		result.setPartnerAmount(getValue(body, "PartnerAmount"));
+		result.setKormOrderNumber(getValue(body, "KormOrderNumber"));
+		result.setActivationCode(getValues(body, "ActivationCodes").get(0));
+		result.setLicenseTerm(getValue(body, "LicenseTerm"));
+		result.setPeriodDescription(getValue(body, "PeriodDescription"));
+		result.setTerm(getValue(body, "Term"));
+		return result;
+	}
+	
 	public static Result createOrder(String sku,int qtd,Long idClienteContrato,String nomeCliente, int flTest, String identificador, String idTransacao) throws Exception {
 		SSL2WayHttpsClient cli = new SSL2WayHttpsClient(inputStreamKey(), "Cdf@2020");//1619Cdf2016
 		String envelop = KasperskyRequestFactory.createOrder(sku, qtd, idClienteContrato, nomeCliente, retornoValor(sku), flTest, identificador, idTransacao);

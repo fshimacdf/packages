@@ -91,6 +91,77 @@ public class KasperskyRequestFactory {
 		request.append("</s:Envelope>");
 		return request.toString();
 	}
+	
+	public static String renewalOrder(String sku, int quantidade, Long idClienteContrato, String nome, int flgTestOrder, String identificador, String idTransacao, String kormNumber) {
+		StringBuilder request = new StringBuilder();
+		request.append("<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\">");
+		request.append("<s:Header>");
+		request.append("	<a:Action s:mustUnderstand=\"1\">http://schemas.kaspersky.com/korm/3.0/orders/IOrderManagementSync/PlaceRenewalOrder</a:Action>");
+		request.append("</s:Header>");
+		request.append("<s:Body>");
+		request.append("<PlaceRenewalOrder xmlns=\"http://schemas.kaspersky.com/korm/3.0/orders\">");
+		request.append("<request xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">");
+		
+		request.append("<AssociatedOrderIdentity>");
+		request.append("<KormOrderNumber>").append(kormNumber).append("</KormOrderNumber>");//<!--OrderNumber of previous order that you are going to renew -->
+		request.append("</AssociatedOrderIdentity>>");
+		
+		if(flgTestOrder == 1) {
+			request.append("	<Comment>H").append((identificador!=null?identificador:idClienteContrato)).append("</Comment>");
+		} else {
+			request.append("	<Comment>").append((identificador!=null?identificador:idClienteContrato)).append("</Comment>");
+		}
+		
+		request.append("	<Customer>");
+		request.append("		<Address>");
+		request.append("			<AddressLine1>Pedroso de Moraes, 1619</AddressLine1>");
+		request.append("			<AddressLine2></AddressLine2>");
+		request.append("			<City>Sao Paulo</City>");
+		request.append("			<Country>BRA</Country>");
+		request.append("			<State>Sao Paulo</State>");
+		request.append("			<Zip>1234</Zip>");
+		request.append("		</Address>");
+		if(nome != null) {
+			request.append("		<Contacts>");
+			request.append("			<Name>").append(Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")).append("</Name>");
+			request.append("		</Contacts>");
+		}
+		request.append("	</Customer>");
+		request.append("<Distributor>");
+		request.append("	<Partner>").append(PARTNER).append("</Partner>");
+		request.append("	<Reseller>").append(PIN).append("</Reseller>");
+		request.append("</Distributor>");
+		request.append("<ExternalOrderAssociation>");
+		request.append("<ExternalId1>").append((identificador!=null?identificador:idClienteContrato)).append("</ExternalId1>"); // <!-- OrderNumber corresponding KORM order in Distributor`s system (included in the invoices) -->
+		request.append("<ExternalId2></ExternalId2>"); // <!-- Another identifier corresponding KORM order in Distributor`s system -->
+		request.append("<ExternalId3></ExternalId3>"); // <!-- Another identifier corresponding KORM order in Distributor`s system -->
+		request.append("</ExternalOrderAssociation>");
+		request.append("<LicenseInfo>");		
+		if(flgTestOrder == 1) {
+			request.append("	<Comments>H").append((identificador!=null?identificador:idClienteContrato)).append("</Comments>");
+		} else {
+			request.append("	<Comments>").append((identificador!=null?identificador:idClienteContrato)).append("</Comments>");
+		}
+		request.append("	<LicenseType>Commercial</LicenseType>"); // <!-- Possible values: Commercial. Other ones are only for internal use. -->
+		request.append("	<Quantity>").append(quantidade).append("</Quantity>");
+		request.append("	<Sku>").append(sku).append("</Sku>"); // <!-- Code of KL product, you may find it in pricelist from KL Sales Manager -->"
+		request.append("	<Term>");
+		request.append("		<ExpirationStartingMoment>FromUserActivation</ExpirationStartingMoment>"); // <!-- Possible values: FromUserActivation, FromPurchase -->
+		request.append("	</Term>");
+		request.append("</LicenseInfo>");
+//		request.append("<!--<PromotionCode>AAA-BBB</PromotionCode>-->"); // <!-- Promotion code for additional discount. Can be requested from KL Sales Manager, if discussed -->
+		if(flgTestOrder == 1) {
+			request.append("<TestOrder>").append(flgTestOrder).append("</TestOrder>"); // <!-- The order will not be invoiced, and cannot be sales order -->
+			request.append("<TransactionId>").append(StringUtils.leftPad("H" + (identificador!=null?identificador:idTransacao), 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
+		} else {
+			request.append("<TransactionId>").append(StringUtils.leftPad((identificador!=null?identificador:idTransacao), 11, '0')).append("</TransactionId>"); // <!-- Unique identifier of a transaction (request). This value should be unqiue for every new order! -->
+		}
+		request.append("</request>");
+		request.append("</PlaceRenewalOrder>");
+		request.append("</s:Body>");
+		request.append("</s:Envelope>");
+		return request.toString();
+	}
 
 	public static String retrieveOrderArtifacts(String kormOrderNumber) {
 		StringBuilder request = new StringBuilder();
