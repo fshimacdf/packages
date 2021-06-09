@@ -104,7 +104,7 @@ public class KasperskyRequestFactory {
 		
 		request.append("<AssociatedOrderIdentity>");
 		request.append("<KormOrderNumber>").append(kormNumber).append("</KormOrderNumber>");//<!--OrderNumber of previous order that you are going to renew -->
-		request.append("</AssociatedOrderIdentity>>");
+		request.append("</AssociatedOrderIdentity>");
 		
 		if(flgTestOrder == 1) {
 			request.append("	<Comment>H").append((identificador!=null?identificador:idClienteContrato)).append("</Comment>");
