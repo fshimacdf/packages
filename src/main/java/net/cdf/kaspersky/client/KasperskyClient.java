@@ -180,6 +180,8 @@ public class KasperskyClient {
 		result.setErrorCode(getValue(body, "ErrorCode"));
 		result.setErrorId(getValue(body, "ErrorId"));
 		result.setErrorMessage(getValue(body, "ErrorMessage"));
+		result.setRequest(envelop);
+		result.setResponse(resp);
 		return result;
 	}
 	

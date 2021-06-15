@@ -57,13 +57,18 @@ public class Kaspersky {
 //			resp = cli.fromResponse(ret);
 //			log.info(resp + System.getProperty("line.separator"));
 //			retrieveResponse(resp);
-//			
-			envelop = KasperskyRequestFactory.cancelOrder("2BC0-210201-140839-2-1143");
+		
+//			String sku, int quantidade, Long idClienteContrato, String nome, String valor, String idTransacao
+//			envelop = KasperskyRequestFactory.createOrder("KL1091KDAMF", 1, 1520000l, "Jose Reinaldo","","1");//12000
+//			ret = cli.postWithSSL(endpoint, 443, envelop);
+//			resp = cli.fromResponse(ret);
+//			log.info(resp + System.getProperty("line.separator"));
+//			String korm = orderResponse(resp);
+		
+			envelop = KasperskyRequestFactory.renewalOrder("KL1091KDAMF", 1, 1520000l, "Jose Reinaldo", 1, null, "1", "2BC0-210609-125346-6-21944");
 			ret = cli.postWithSSL(endpoint, 443, envelop);
 			resp = cli.fromResponse(ret);
 			log.info(resp + System.getProperty("line.separator"));
-			cancelResponse(resp);
-		
 //		}
 		
 //		
@@ -71,7 +76,7 @@ public class Kaspersky {
 		
 	}
 
-	public static void orderResponse(String resp) throws IOException, SOAPException {
+	public static String orderResponse(String resp) throws IOException, SOAPException {
 		InputStream is = new ByteArrayInputStream(resp.getBytes());
 		SOAPMessage response = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL).createMessage(new MimeHeaders(), is);
 		SOAPBody body = response.getSOAPBody();
@@ -92,6 +97,8 @@ public class Kaspersky {
 
 		log.info("PeriodDescription:" + getValue(body, "PeriodDescription"));
 		log.info("Term:" + getValue(body, "Term"));
+		
+		return getValue(body, "KormOrderNumber");
 	}
 	
 	public static void retrieveResponse(String resp) throws IOException, SOAPException {

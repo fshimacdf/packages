@@ -20,4 +20,7 @@ public class Result {//TESTE2
 	private String periodDescription;
 	private String term;
 	private String licenseId;
+	
+	private String request;
+	private String response;
 }
